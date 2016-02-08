@@ -17,9 +17,9 @@ class NN(Chain):
     #構造
     def __init__(self):
         super(NN, self).__init__(
-            l1=L.Linear(2, 1000),
-            l2=L.Linear(1000, 1000),
-            l3=L.Linear(1000, 1),
+            l1=L.Linear(2, 10),
+            l2=L.Linear(10, 10),
+            l3=L.Linear(10, 1),
         )
 
     #順伝播
@@ -132,4 +132,16 @@ if __name__=="__main__":
         with open("output.csv", "a") as f:
             f.write("%d,%f,%f\n" % (epoch, float(sum_train_loss)/trainDataSize, float(sum_test_loss)/testDataSize) )
 
+    #試しに1層目だけ重みの出力
+    l1_W = model.predictor.l1.W.data
+    l1_b = model.predictor.l1.b.data
+    with open("l1_W.csv", "a") as f:
+        for i in range(0, len(l1_W)):
+            for j in range(0, len(l1_W[i])):
+                f.write("%f," % l1_W[i][j])
+            f.write("\n")
+            
+    with open("l1_b.csv", "a") as f:
+        for i in range(0, len(l1_b)):
+            f.write("%f\n" % l1_b[i])
     
